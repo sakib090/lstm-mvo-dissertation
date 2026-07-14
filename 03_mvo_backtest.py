@@ -37,7 +37,7 @@ def mvo_weights(exp_returns: np.ndarray, cov: np.ndarray, risk_aversion=3.0):
 
 def run_backtest():
     returns = dp.load_index_returns()
-    pred_df = pd.read_csv("lstm_predictions.csv", index_col=0, parse_dates=True)
+    pred_df = pd.read_csv("data/processed/lstm_predictions.csv", index_col=0, parse_dates=True)
     assets = list(returns.columns)
 
     month_ends = pred_df.resample("ME").last().index
@@ -122,8 +122,8 @@ if __name__ == "__main__":
     metrics = {name: performance_metrics(r) for name, r in results.items()}
     metrics_df = pd.DataFrame(metrics).T
     print(metrics_df.round(4))
-    metrics_df.to_csv("backtest_metrics.csv")
+    metrics_df.to_csv("data/processed/backtest_metrics.csv")
     for name, r in results.items():
-        r.to_csv(f"daily_returns_{name}.csv")
+        r.to_csv(f"data/processed/daily_returns_{name}.csv")
     for name, w in weights_df.items():
-        w.to_csv(f"weights_{name}.csv")
+        w.to_csv(f"data/processed/weights_{name}.csv")

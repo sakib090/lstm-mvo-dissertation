@@ -17,7 +17,7 @@ plt.xlabel("Date")
 plt.ylabel("Growth of \u00a31 invested")
 plt.legend()
 plt.tight_layout()
-plt.savefig("fig1_cumulative_returns.png", dpi=200)
+plt.savefig("figures/fig1_cumulative_returns.png", dpi=200)
 plt.close()
 
 # --- Figure 2: drawdown ---
@@ -31,7 +31,7 @@ plt.xlabel("Date")
 plt.ylabel("Drawdown")
 plt.legend()
 plt.tight_layout()
-plt.savefig("fig2_drawdown.png", dpi=200)
+plt.savefig("figures/fig2_drawdown.png", dpi=200)
 plt.close()
 
 # --- Figure 3: LSTM-MVO monthly weight allocation ---
@@ -44,7 +44,7 @@ plt.xlabel("Date")
 plt.ylabel("Weight")
 plt.legend(loc="upper left")
 plt.tight_layout()
-plt.savefig("fig3_lstm_weights.png", dpi=200)
+plt.savefig("figures/fig3_lstm_weights.png", dpi=200)
 plt.close()
 
 print("Figures saved.")

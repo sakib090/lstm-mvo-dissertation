@@ -121,8 +121,8 @@ def train_lstm():
     pred_df = pd.DataFrame(preds_test, index=dates_test, columns=returns.columns)
     actual_df = pd.DataFrame(y_test, index=dates_test, columns=returns.columns)
 
-    pred_df.to_csv("lstm_predictions.csv")
-    actual_df.to_csv("lstm_actuals.csv")
+    pred_df.to_csv("data/processed/lstm_predictions.csv")
+    actual_df.to_csv("data/processed/lstm_actuals.csv")
 
     for col in returns.columns:
         mse_model = ((pred_df[col] - actual_df[col]) ** 2).mean()

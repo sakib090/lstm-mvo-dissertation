@@ -47,4 +47,4 @@ if __name__ == "__main__":
     feats = engineer_features(returns)
     for k, v in feats.items():
         print(k, v.shape, v.index.min(), v.index.max())
-    returns.to_csv("returns_aligned.csv")
+    returns.to_csv("data/processed/returns_aligned.csv")
