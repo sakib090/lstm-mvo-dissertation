@@ -73,18 +73,27 @@ def main():
     print(summary_df.round(4).to_string())
     summary_df.to_csv(f"{WEIGHTS_DIR}/weights_stability_summary.csv")
 
-    # --- Plot: stacked weights over time, LSTM-MVO vs Classical MVO ---
-    fig, axes = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
-    for ax, (name, label) in zip(axes, STRATEGIES.items()):
-        w = weights[name]
-        ax.stackplot(w.index, w["STOXX1800"], w["RUSSELL1000"], w["SHANGHAI_A"],
-                     labels=ASSETS, alpha=0.85)
-        ax.set_title(f"{label} Monthly Portfolio Weights (Walk-Forward)")
+    # --- Plot: one subplot per asset, LSTM-MVO vs Classical MVO as separate
+    # lines. This is far easier to read than a stacked-area chart for
+    # comparing two strategies, since each asset's weight over time is
+    # traced directly rather than inferred from a filled region's thickness.
+    fig, axes = plt.subplots(len(ASSETS), 1, figsize=(9, 8), sharex=True)
+    colors = {"lstm_mvo": "#1f77b4", "hist_mvo": "#ff7f0e"}
+    styles = {"lstm_mvo": "-", "hist_mvo": "--"}
+
+    for ax, asset in zip(axes, ASSETS):
+        for name, label in STRATEGIES.items():
+            w = weights[name]
+            ax.plot(w.index, w[asset], label=label, color=colors[name],
+                     linestyle=styles[name], linewidth=1.8)
+        ax.set_title(asset, fontsize=11, loc="left")
         ax.set_ylabel("Weight")
-        ax.set_ylim(0, 1)
+        ax.set_ylim(-0.02, 1.02)
+        ax.grid(True, alpha=0.3)
 
     axes[-1].set_xlabel("Date")
-    axes[0].legend(loc="upper left", fontsize=8)
+    axes[0].legend(loc="upper right", fontsize=9, ncol=2)
+    fig.suptitle("Portfolio Weight by Asset: LSTM-MVO vs Classical MVO (Walk-Forward)", fontsize=13)
     plt.tight_layout()
     plt.savefig("figures/fig4_weights_comparison.png", dpi=200)
     plt.close()
