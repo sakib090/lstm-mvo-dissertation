@@ -84,7 +84,7 @@ def main():
     for ax, asset in zip(axes, ASSETS):
         for name, label in STRATEGIES.items():
             w = weights[name]
-            ax.plot(w.index, w[asset], label=label, color=colors[name],
+            ax.step(w.index, w[asset], where="post", label=label, color=colors[name],
                      linestyle=styles[name], linewidth=1.8)
         ax.set_title(asset, fontsize=11, loc="left")
         ax.set_ylabel("Weight")

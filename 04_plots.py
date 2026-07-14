@@ -29,20 +29,30 @@ for name, r in results.items():
 plt.title("Portfolio Drawdown")
 plt.xlabel("Date")
 plt.ylabel("Drawdown")
-plt.legend()
+plt.legend(loc="upper left")
 plt.tight_layout()
 plt.savefig("figures/fig2_drawdown.png", dpi=200)
 plt.close()
 
 # --- Figure 3: LSTM-MVO monthly weight allocation ---
-plt.figure(figsize=(7, 4.2))
+# Redesigned as small multiples (one panel per asset) rather than a stacked
+# area chart -- the sharp monthly pivots in an unconstrained MVO weight path
+# read as solid color blocks when stacked, making it hard to trace any one
+# asset's actual weight over time. A separate line per asset is much clearer,
+# and keeps this figure visually consistent with fig4_weights_comparison.png.
+ASSETS = ["STOXX1800", "RUSSELL1000", "SHANGHAI_A"]
 w = weights_df["lstm_mvo"]
-plt.stackplot(w.index, w["STOXX1800"], w["RUSSELL1000"], w["SHANGHAI_A"],
-              labels=["STOXX1800", "RUSSELL1000", "SHANGHAI_A"], alpha=0.85)
-plt.title("LSTM-MVO Monthly Portfolio Weights")
-plt.xlabel("Date")
-plt.ylabel("Weight")
-plt.legend(loc="upper left")
+
+fig, axes = plt.subplots(len(ASSETS), 1, figsize=(7, 6), sharex=True)
+for ax, asset in zip(axes, ASSETS):
+    ax.step(w.index, w[asset], where="post", color="#1f77b4", linewidth=1.8)
+    ax.set_title(asset, fontsize=11, loc="left")
+    ax.set_ylabel("Weight")
+    ax.set_ylim(-0.02, 1.02)
+    ax.grid(True, alpha=0.3)
+
+axes[-1].set_xlabel("Date")
+fig.suptitle("LSTM-MVO Monthly Portfolio Weights", fontsize=13)
 plt.tight_layout()
 plt.savefig("figures/fig3_lstm_weights.png", dpi=200)
 plt.close()
