@@ -1,0 +1,6 @@
+,AnnReturn,AnnVol,Sharpe,Sortino,MaxDD,N
+LSTM-MVO (dynamic),10.35,15.91,0.699,0.698,-13.52,46.0
+Fixed-avg-weight (LSTM mean),6.08,13.3,0.511,0.418,-18.18,46.0
+Buy&Hold STOXX1800,7.89,16.06,0.554,0.489,-19.51,46.0
+Buy&Hold RUSSELL1000,7.59,18.77,0.484,0.421,-28.26,46.0
+Buy&Hold SHANGHAI_A,1.82,15.29,0.192,0.213,-21.4,46.0
