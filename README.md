@@ -126,17 +126,7 @@ is the slowest (several minutes on CPU).
 
 ---
 
-## 6. Generative AI usage
-
-Generative AI (Claude, Anthropic) was used for code scaffolding/debugging, for
-organising examiner feedback, and for drafting/editing prose. All experimental
-results, numerical values, tables and figures were produced by the author's own
-code on the author's own data and verified by the author. See Appendix A of the
-research paper for the full signed accountability statement.
-
----
-
-## 7. Notes and known limitations
+## 6. Notes and known limitations
 
 - Annualisation uses 252 trading days for comparability; the aligned three-market
   calendar averages ~234 days/year (see §3.5).
