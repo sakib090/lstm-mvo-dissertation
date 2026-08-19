@@ -4,8 +4,8 @@ Feedback addressed: decompose LSTM-MVO minus classical MVO into
 (weight difference) x (index return), per index, and say which index it came from.
 
 v3 approach:
-  * Reconciliation uses your ACTUAL saved daily portfolio returns
-    (daily_returns_{lstm_mvo,hist_mvo}_walkforward.csv) run through your OWN
+  * Reconciliation uses  ACTUAL saved daily portfolio returns
+    (daily_returns_{lstm_mvo,hist_mvo}_walkforward.csv) run through OWN
     metric function (pipeline_io.performance_metrics_daily), so the totals match
     Table 3 exactly.
   * Attribution decomposes the gap on a DAILY basis: for each holding period,
@@ -40,7 +40,6 @@ def main():
     w_lstm = io.load_weights("lstm")
     w_cls = io.load_weights("classical")
 
-    # --- Reconciliation using YOUR saved daily P&L and YOUR metric function ----
     pnl_lstm = io.load_pnl("lstm")
     pnl_cls = io.load_pnl("classical")
     m_lstm = io.performance_metrics_daily(pnl_lstm)
@@ -52,13 +51,12 @@ def main():
           f"Sharpe {m_cls['Sharpe']:.3f}   (Table 3:  8.64%, 0.61)")
     gap = (m_lstm['AnnReturn'] - m_cls['AnnReturn']) * 100
     print(f"  Annualised return gap: {gap:+.2f}pp")
-    # also show the corrected-annualisation version the marker wants
     m_lstm_true = io.performance_metrics_daily(pnl_lstm, io.TRADING_DAYS_TRUE)
     m_cls_true = io.performance_metrics_daily(pnl_cls, io.TRADING_DAYS_TRUE)
     print(f"  [corrected 233-day annualisation] LSTM Sharpe {m_lstm_true['Sharpe']:.3f}, "
           f"Classical Sharpe {m_cls_true['Sharpe']:.3f}")
 
-    # --- Per-index attribution on the daily series ----------------------------
+    
     c_lstm = daily_contributions(daily_idx, w_lstm)   # daily w_i*r_i for LSTM
     c_cls = daily_contributions(daily_idx, w_cls)     # daily w_i*r_i for classical
     common = c_lstm.index.intersection(c_cls.index)

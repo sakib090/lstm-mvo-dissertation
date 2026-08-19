@@ -1,5 +1,5 @@
 """
-s5_linear_benchmarks.py  (v2 — reuses your 02b feature construction)
+s5_linear_benchmarks.py  (v2 — reuses 02b feature construction)
 Feedback: fit OLS and Ridge on the SAME 15 features and 5-day target, plus AR(1),
 walk-forward, and report diagnostics next to the LSTM. Establishes whether the
 LSTM architecture adds anything over a linear model on identical inputs.

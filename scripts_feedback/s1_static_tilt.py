@@ -7,7 +7,6 @@ held at LSTM-MVO's own average weights? Plus: how do the three single-index
 buy-and-holds do? If the fixed-average-weight row matches LSTM-MVO, the
 "active, sometimes concentrated timing" added nothing and the result is a tilt.
 
-Output: output/s1_static_tilt.csv  and a printed table ready for the paper.
 """
 import numpy as np
 import pandas as pd
@@ -25,7 +24,7 @@ def portfolio_monthly_returns(daily: pd.DataFrame, weights_by_reb: pd.DataFrame)
         if window.empty:
             continue
         w = weights_by_reb.loc[d0].values
-        # compound each asset over the window, then dot with weights (buy-and-hold within period)
+        # compound each asset over the window
         asset_growth = (1 + window).prod().values
         port_growth = float(np.dot(w, asset_growth))
         out[d1] = port_growth - 1.0
@@ -41,17 +40,17 @@ def main():
 
     rows = {}
 
-    # 1) LSTM-MVO as actually run (reconstructed here for apples-to-apples)
+    
     rows["LSTM-MVO (dynamic)"] = io.metrics_block(
         portfolio_monthly_returns(daily, lstm_w))
 
-    # 2) Fixed-average-weight: hold LSTM-MVO's MEAN weight, never re-optimise
+    
     avg_w = lstm_w.mean().values
     avg_w = avg_w / avg_w.sum()
     rows["Fixed-avg-weight (LSTM mean)"] = io.metrics_block(
         portfolio_monthly_returns(daily, constant_weight_frame(reb_index, avg_w)))
 
-    # 3) Three single-index buy-and-holds
+    
     for j, a in enumerate(io.ASSETS):
         w = np.zeros(len(io.ASSETS)); w[j] = 1.0
         rows[f"Buy&Hold {a}"] = io.metrics_block(

@@ -5,12 +5,6 @@ They are written to slot into your existing pipeline (01–07) with minimal chan
 Each one is self-contained and prints a small results table you can paste into
 the paper, plus saves a CSV/PNG under `output/`.
 
-## What you need to wire up (once)
-
-Every script imports a tiny shim, `pipeline_io.py`, that is the ONLY place that
-knows how your data and backtest live. Edit `pipeline_io.py` so its functions
-return your real objects. Everything else then just works. Placeholder logic is
-clearly marked with `# >>> EDIT ME`.
 
 The functions the scripts rely on:
 
@@ -37,5 +31,3 @@ The functions the scripts rely on:
 6. `s6_seed_sweep.py`       – 5–10 seeds, Sharpe distribution, ablation (Feedback: overfitting/seeds)
 7. `s7_inference_se.py`     – Newey–West / block-bootstrap SEs          (Feedback: overlapping targets)
 8. `s8_data_diagnostics.py` – correlation matrix, per-index ret/vol, ann. factor (Feedback: data)
-
-All are independent except s2 needs weights (from your pipeline) and s3 needs P&L series.

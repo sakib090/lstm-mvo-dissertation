@@ -1,31 +1,17 @@
-"""
-pipeline_io.py — the ONLY file you need to edit to wire the feedback scripts
-into your real pipeline. Replace each placeholder body so it returns your real
-objects, then every s1..s8 script works unchanged.
-
-Everything marked `# >>> EDIT ME` is where your real code goes.
-"""
-
 import numpy as np
 import pandas as pd
 from pathlib import Path
 
 ASSETS = ["STOXX1800", "RUSSELL1000", "SHANGHAI_A"]
 
-# Point this at wherever your processed data lives.
-DATA_DIR = Path("data/processed")          # >>> EDIT ME if different
+DATA_DIR = Path("data/processed")          
 OUTPUT_DIR = Path("output"); OUTPUT_DIR.mkdir(exist_ok=True)
 
-# Annualisation.
-# NOTE: your backtest (03_mvo_backtest.performance_metrics) uses 252 daily
-# periods/year. Your aligned calendar actually has ~233.7 (s8). TRADING_DAYS_BT
-# reproduces the backtest's own numbers EXACTLY (use this to reconcile); 
-# TRADING_DAYS_TRUE is the empirically correct factor the marker asked for.
 TRADING_DAYS_BT = 252            # matches 03_mvo_backtest.performance_metrics
 TRADING_DAYS_TRUE = 233         # empirically correct (s8): 3,267 days / ~14 yrs
-TRADING_DAYS = TRADING_DAYS_BT  # default: reproduce the backtest
-RF_ANNUAL = 0.0                 # RISK_FREE_DAILY = 0.0 in your backtest
-REBALANCES_PER_YEAR = 12        # monthly (for optional monthly-frequency tests)
+TRADING_DAYS = TRADING_DAYS_BT  # default: reproduce  backtest
+RF_ANNUAL = 0.0                 # RISK_FREE_DAILY = 0.0  backtest
+REBALANCES_PER_YEAR = 12        # monthly 
 
 
 def performance_metrics_daily(daily: pd.Series, periods_per_year: int = TRADING_DAYS_BT) -> dict:
@@ -74,13 +60,12 @@ def load_returns() -> pd.DataFrame:
 
 def load_lstm_mu() -> pd.DataFrame:
     """Walk-forward LSTM expected-return vectors, index=rebalance dates."""
-    # >>> EDIT ME: whatever 02b/03b saved as the per-rebalance mu.
     raise NotImplementedError("Wire load_lstm_mu() to your saved walk-forward mu.")
 
 
 WALKFORWARD_DIR = DATA_DIR / "walkforward"   # data/processed/walkforward
 
-# Maps the generic strategy names the scripts use to your saved-file keys.
+# Maps the generic strategy names the scripts use saved-file keys.
 _WEIGHT_KEY = {"lstm": "lstm_mvo", "classical": "hist_mvo"}
 
 
@@ -145,14 +130,10 @@ def load_predictions(horizon: int = 5):
     pred = pd.read_csv(pred_path, index_col=0, parse_dates=True)[ASSETS]
 
     daily = load_returns()
-    # forward cumulative return over (t, t+horizon]: shift(-1) so it's strictly forward
+    # forward cumulative return over 
     fwd = (1 + daily).rolling(horizon).apply(np.prod, raw=True).shift(-horizon) - 1
-    # align: prediction made at date t targets the forward window starting after t
     common = pred.index.intersection(fwd.dropna().index)
     return pred.loc[common], fwd.loc[common]
-
-
-# ---- Metric helpers (shared, correct annualisation) -------------------------
 
 def ann_return_geom(monthly: pd.Series) -> float:
     """Geometric annualised return (CAGR) from a monthly return series."""

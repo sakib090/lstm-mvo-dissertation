@@ -5,10 +5,7 @@ If it moves by >~0.1, report a distribution not a point estimate. Add a 4/8
 hidden-unit capacity ablation. Also prints the LSTM parameter count vs
 independent-block count for the overfitting discussion.
 
-This re-runs your LSTM training (02b logic) per seed. It is the SLOWEST script
-(~a few min per seed on CPU). Reduce SEEDS or EPOCHS while testing.
-
-Run from project root:  python scripts_feedback/s6_seed_sweep.py
+This re-runs LSTM training (02b logic) per seed. It is the SLOWEST script
 """
 import sys, os
 import numpy as np
@@ -24,7 +21,7 @@ m2 = import_module("02_lstm_model")
 b2 = import_module("02b_lstm_walkforward")
 bt = import_module("03_mvo_backtest")
 
-SEEDS = [0, 1, 2, 3, 4]        # bump to 10 for the final run
+SEEDS = [0, 1, 2, 3, 4]        
 HIDDEN_ABLATION = [4, 8, 32]
 
 

@@ -1,8 +1,8 @@
 """
-s4_placebos.py  (v2 — uses your real mvo_weights + walk-forward schedule)
+s4_placebos.py  (v2 — uses real mvo_weights + walk-forward schedule)
 Feedback: random-mu placebo, momentum-as-mu, minimum-variance, inverse-vol.
 
-Reuses your 03_mvo_backtest.mvo_weights and the SAME monthly-rebalance /
+Reuses 03_mvo_backtest.mvo_weights and the SAME monthly-rebalance /
 trailing-252 covariance / 5bps-cost mechanics as 03b, so every placebo is
 directly comparable to LSTM-MVO. Only the expected-return vector mu changes
 (or, for min-var/inv-vol, weights are set without mu).
@@ -16,7 +16,6 @@ import numpy as np
 import pandas as pd
 from importlib import import_module
 
-# make project-root modules importable regardless of where we're run from
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts_feedback"))
@@ -28,7 +27,7 @@ mvo_weights = bt.mvo_weights
 TXN = bt.TXN_COST_BPS
 
 ASSETS = io.ASSETS
-LSTM_WF_SHARPE = 0.84   # your walk-forward LSTM-MVO Sharpe, for placebo comparison
+LSTM_WF_SHARPE = 0.84   # walk-forward LSTM-MVO Sharpe, for placebo comparison
 
 
 def rebalance_dates(returns):
