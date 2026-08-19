@@ -1,6 +1,6 @@
 """
 s9_training_curve.py
-Produces the figure the marker asked for behind the Section 3.3 overfitting claim:
+Produces the figure asked for behind the Section 3.3 overfitting claim:
 a training-loss curve showing the LSTM converging on the training data.
 
 Because hyperparameters were NOT selected on a held-out validation set (disclosed
@@ -10,10 +10,9 @@ loss is the visual signature of overfitting: the model fits the training period 
 does not generalise. Optionally also overlays a validation curve IF you later add a
 2017-2018 validation split (set VALIDATION=True and wire it).
 
-Reuses your 02_lstm_model architecture + 01_data_prep exactly, so the trained model
+Reuses 02_lstm_model architecture + 01_data_prep exactly, so the trained model
 is identical to the one used in the backtest.
 
-Run from project root:  python scripts_feedback/s9_training_curve.py
 Output: figures/fig5_training_loss.png
 """
 import sys, os
@@ -34,7 +33,7 @@ m2 = import_module("02_lstm_model")
 
 SEED = 42
 EPOCHS = 15
-VALIDATION = False   # set True only if you carve a real 2017-2018 validation split
+VALIDATION = False  
 
 
 def main():

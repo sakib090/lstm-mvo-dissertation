@@ -1,13 +1,12 @@
 """
 s7_inference_se.py
-Feedback addressed: "consecutive test samples share 4 of 5 target days ... Every MSE
-and directional-accuracy statistic ... needs Newey-West or 5-day block-bootstrap
+Feedback addressed: "consecutive test samples share 4 of 5 target days Every MSE
+and directional-accuracy statistic needs Newey-West or 5-day block-bootstrap
 standard errors rather than i.i.d. ones."
 
 Provides HAC (Newey-West) and 5-day circular block-bootstrap SEs / p-values for:
   - directional accuracy vs 0.5
   - out-of-sample R^2 vs 0 (MSE_model vs MSE_zero)
-Wire `load_predictions()` to your per-day LSTM predictions and realised 5-day targets.
 """
 import numpy as np
 import pandas as pd

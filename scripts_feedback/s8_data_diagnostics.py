@@ -1,10 +1,9 @@
 """
 s8_data_diagnostics.py
 Feedback addressed: "report the 3x3 correlation matrix of daily returns and each
-index's standalone annualised return and volatility over 2019-2022 ... your aligned
+index's standalone annualised return and volatility over 2019-2022aligned
 calendar gives about 233 trading days per year (3,267 over 14 years), not 252."
 
-Fully self-contained once load_returns() is wired. No modelling needed.
 """
 import numpy as np
 import pandas as pd
