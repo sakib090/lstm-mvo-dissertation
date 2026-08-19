@@ -1,4 +1,4 @@
-# LSTM-MVO Dissertation — Supporting Material
+# LSTM-MVO Dissertation - Supporting Material
 
 **Author:** Sakib Islam (250994104)
 **Programme:** MSc Data Science, Queen Mary University of London
@@ -58,7 +58,7 @@ Final Year Project/
 
 ---
 
-## 3. Core pipeline — run in order
+## 3. Core pipeline - run in order
 
 | Step | Script | Produces |
 |------|--------|----------|
@@ -80,7 +80,7 @@ Run each from the project root, e.g. `python 01_data_prep.py`.
 ## 4. Additional analysis scripts (marker-feedback response)
 
 All in `scripts_feedback/`. **Run from the project root** (they import the core
-pipeline modules). `pipeline_io.py` is the shared loader and does not need editing —
+pipeline modules). `pipeline_io.py` is the shared loader and does not need editing -
 it is already wired to the file paths above.
 
 | Script | Addresses | Regenerates |
